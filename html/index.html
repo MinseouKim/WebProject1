@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipick</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="app-wrapper">
+        <div class="company-name fade-in" onclick="showCreatorModal()">주식회사 밥프렌즈</div>
+        <button class="menu-btn fade-in" onclick="toggleLoginModal()">
+            <i class="fas fa-user"></i> 로그인
+        </button>
+        
+        <div class="header fade-in">
+            <div class="logo" onclick="refreshPage()">
+                <div class="logo-text">
+                    <span style="--i:1" class="letter">R</span>
+                    <span style="--i:2" class="letter">e</span>
+                    <span style="--i:3" class="letter">c</span>
+                    <span style="--i:4" class="letter highlight">!</span>
+                    <span style="--i:5" class="letter tight-right">P</span> <!-- 오른쪽 간격 줄임 -->
+
+<!-- 숟가락 아이콘 -->
+<span style="--i:6" class="letter spoon-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="100" height="100">
+    <g class="wiggle">
+      <ellipse cx="32" cy="20" rx="12" ry="14" fill="#e0e0e0"/>
+      <rect x="30" y="30" width="4" height="28" rx="2" fill="#e0e0e0"/>
+    </g>
+  </svg>
+</span>
+
+<span style="--i:7" class="letter tight-left">c</span> <!-- 왼쪽 간격 줄임 -->
+<span style="--i:8" class="letter">k</span>
+
+
+                </div>
+                <div class="plate"></div>
+                <div class="food-decoration left"></div>
+                <div class="food-decoration right"></div>
+                <div class="steam steam-1"></div>
+                <div class="steam steam-2"></div>
+                <div class="steam steam-3"></div>
+                <div class="glow"></div>
+            </div>
+        </div>
+        
+        <div class="container fade-in delay-1">
+            <div class="input-container">
+                <input type="text" id="ingredients" placeholder="재료 입력 (예: 달걀, 돼지고기)">
+                <button class="search-button" onclick="recommendRecipe()">
+                    <i class="fas fa-search"></i> 추천 받기
+                </button>
+            </div>
+            <div id="result"></div>
+            
+     <h2 class="section-title fade-in delay-2">
+    <i class="fas fa-fire"></i> 관련 요리 영상
+</h2>
+<div class="video-thumbnails fade-in delay-3" id="popularVideos"></div>
+            <!-- 카테고리 버튼 추가 -->
+
+        </div>
+    </div>
+
+    <!-- 로그인/회원가입 모달 -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="toggleLoginModal()">
+                <i class="fas fa-times"></i>
+            </button>
+        
+            <div class="tab-buttons">
+                <button onclick="showLoginTab()" id="loginTabBtn" class="active">로그인</button>
+                <button onclick="showSignupTab()" id="signupTabBtn">회원가입</button>
+            </div>
+
+            <div id="loginForm">
+                <div class="input-group">
+                    <input type="text" id="username" placeholder="        아이디">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="input-group">    
+                    <input type="password" id="password" placeholder="        비밀번호">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <button class="action-btn" onclick="login()">로그인</button>
+
+                <div class="social-login">
+                    <p>또는</p>
+                    <div class="social-buttons">
+                        <button class="social-btn google">
+                            <i class="fab fa-google"></i>
+                          </button>
+                          <button class="social-btn facebook">
+                            <i class="fab fa-facebook-f"></i>
+                          </button>
+                        <button class="social-btn kakao">
+                            <i class="fas fa-comment"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="signupForm" style="display:none;">
+                <div class="input-group">
+                    <input type="text" id="signupUsername" placeholder="        아이디">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="signupPassword" placeholder="        비밀번호">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="signupPasswordConfirm" placeholder="        비밀번호 확인">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <button class="action-btn" onclick="signup()">회원가입</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 제작자 정보 모달 -->
+    <div id="creatorModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeCreatorModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="creator-avatar">
+                <i class="fas fa-user-chef"></i>
+            </div>
+            <div class="creator-info">
+                <h3>밥프렌즈 개발팀</h3>
+                <p>맛있는 요리의 세계로 당신을 초대합니다. Rec!Pick은 냉장고 속 재료들로 무엇을 만들지 고민하는 모든 분들을 위해 탄생했습니다.</p>
+                <p>"우리는 모든 사람들이 요리의 즐거움을 경험할 수 있도록 돕고 싶습니다."</p>
+                
+                <div class="creator-social">
+                    <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="#" target="_blank"><i class="fas fa-globe"></i></a>
+                    <a href="#" target="_blank"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 로딩 애니메이션 -->
+    <div id="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <script src="JS/script.js"></script>
+</body>
+</html>
